@@ -1,0 +1,148 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	color: #ffffff;
+	background: #0f172a;
+}
+
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 10;
+	padding: 1rem 1.5rem;
+	background: linear-gradient(to bottom, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0));
+}
+
+nav {
+	display: flex;
+	justify-content: center;
+	gap: 0.75rem;
+	font-size: 0.95rem;
+}
+
+nav a {
+	color: #f8fafc;
+	text-decoration: none;
+	letter-spacing: 0.04em;
+}
+
+main {
+	width: 100%;
+}
+
+.parallax-section {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6rem 1.5rem 2rem;
+	position: relative;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.parallax-section::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(2, 6, 23, 0.35), rgba(2, 6, 23, 0.72));
+}
+
+.parallax-content {
+	position: relative;
+	z-index: 1;
+	max-width: 720px;
+	text-align: center;
+}
+
+.hero {
+	background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbuM0HUwDTuYfPhhzypk8O-DKNC07LZRbhgBlgxDcVRXrpTlgMpkwts_Hb&s=10");
+}
+
+.details {
+	
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.eyebrow {
+	margin: 0 0 1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.24em;
+	font-size: 0.8rem;
+	color: #cbd5e1;
+}
+
+h1 {
+	margin: 0;
+	font-size: clamp(3rem, 8vw, 6rem);
+}
+
+.lead {
+	margin: 1rem auto 0;
+	max-width: 42rem;
+	font-size: 1.1rem;
+	line-height: 1.7;
+	color: #e2e8f0;
+}
+
+.card {
+	width: min(100%, 760px);
+	padding: 1.5rem;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 1.25rem;
+	background: rgba(15, 23, 42, 0.72);
+	backdrop-filter: blur(10px);
+	box-shadow: 0 20px 60px rgba(2, 6, 23, 0.35);
+	text-align: left;
+}
+
+.card h2 {
+	margin-top: 0;
+}
+
+.skills-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+	gap: 0.75rem;
+	padding: 0;
+	margin: 1.25rem 0 0;
+	list-style: none;
+}
+
+.skills-list li {
+	padding: 0.8rem 0.9rem;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.08);
+	text-align: center;
+}
+
+.contact-card a {
+	color: #93c5fd;
+}
+
+@media (max-width: 700px) {
+	.parallax-section {
+		background-attachment: scroll;
+	}
+
+	nav {
+		flex-wrap: wrap;
+	}
+
+	.card {
+		text-align: left;
+	}
+}

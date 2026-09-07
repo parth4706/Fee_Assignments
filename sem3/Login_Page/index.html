@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <header class="topbar">
+        <a class="logo" href="#">Logo</a>
+        <nav class="nav-links" aria-label="Primary">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+            <button class="nav-login" type="button" data-login-toggle aria-controls="login-card"
+                aria-expanded="true">Login</button>
+        </nav>
+    </header>
+
+    <main class="scene">
+        <section class="login-card" id="login-card" aria-label="Login form">
+            <button class="close-button" type="button" data-login-toggle aria-controls="login-card" aria-expanded="true"
+                aria-label="Close login form">×</button>
+
+            <h1>Login</h1>
+
+            <form class="login-form">
+                <label class="field" for="email">
+                    <span>Email</span>
+                    <input id="email" name="email" type="email" autocomplete="email" required>
+                </label>
+
+                <label class="field" for="password">
+                    <div class="field-header">
+                        <span>Password</span>
+                        <span class="help-icon" title="Enter your secure password">?</span>
+                    </div>
+                    <input id="password" name="password" type="password" autocomplete="current-password" required>
+                </label>
+
+                <div class="form-row">
+                    <label class="remember-me" for="remember">
+                        <input id="remember" name="remember" type="checkbox" checked>
+                        <span>Remember me</span>
+                    </label>
+
+                    <a class="forgot-link" href="#">Forgot Password?</a>
+                </div>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p class="signup-text">Don't have an account? <a href="#">Register</a></p>
+        </section>
+    </main>
+
+    <script>
+        const loginCard = document.getElementById('login-card');
+        const toggleButtons = document.querySelectorAll('[data-login-toggle]');
+
+        const setLoginState = (isOpen) => {
+            loginCard.classList.toggle('is-hidden', !isOpen);
+            toggleButtons.forEach((button) => {
+                button.setAttribute('aria-expanded', String(isOpen));
+            });
+        };
+
+        toggleButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                const isOpen = !loginCard.classList.contains('is-hidden');
+                setLoginState(!isOpen);
+            });
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                setLoginState(false);
+            }
+        });
+    </script>
+    <div id="chat_icon" aria-label="Chat support icon">
+        <!-- <img src="m115otughmn5rse811cviu4ugo.png" alt="Chat support" width="100"> -->
+    </div>
+
+    <div id="meme-container" aria-label="Random meme">
+        <img id="random-meme" src="" alt="Random meme" />
+    </div>
+
+    <!-- <script>
+        const memeList = [
+            // 'https://i.imgflip.com/1bij.jpg',
+            // 'https://i.imgflip.com/265k.jpg',
+            // 'https://i.imgflip.com/1g8my4.jpg',
+            // 'https://i.imgflip.com/1ur9b0.jpg',
+            // 'https://i.imgflip.com/2hgfw.jpg',
+            // 'https://i.imgflip.com/3eh0dh.jpg',
+            // 'https://i.imgflip.com/bb2m0.jpg',
+            // 'https://i.imgflip.com/gk5cb.jpg',
+            // 'https://i.imgflip.com/2xwzgz.jpg'
+        ];
+
+        function loadRandomMeme() {
+            const randomMeme = memeList[Math.floor(Math.random() * memeList.length)];
+            document.getElementById('random-meme').src = randomMeme;
+        }
+
+        loadRandomMeme();
+        setInterval(loadRandomMeme, 5000); -->
+    </script>
+</body>
+
+</html>

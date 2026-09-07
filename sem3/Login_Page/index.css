@@ -1,0 +1,457 @@
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--page-text: #eaf0f7;
+	--nav-text: #f2f5f8;
+	--glass-bg: rgba(223, 236, 249, 0.64);
+	--glass-border: rgba(255, 255, 255, 0.48);
+	--card-text: #1b2b3d;
+	--card-heading: #162638;
+	--field-text: #2b3a4c;
+	--field-line: rgba(31, 51, 73, 0.92);
+	--control-bg: #1f3349;
+	--control-bg-hover: #162638;
+	--primary-button: #1a2b3d;
+	--primary-button-hover: #22364b;
+	--accent-link: #0f5ba7;
+	--overlay: rgba(14, 25, 38, 0.66);
+	--scene-dim: rgba(5, 13, 24, 0.5);
+}
+
+html {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	font-family: "Segoe UI";
+	color: var(--page-text);
+	background:
+		linear-gradient(var(--overlay), var(--overlay)),
+		url("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQcYeom0lmbSmh6F9vRe-hXzi1eu1ULdoit8pRBLzcRfmyZyMMH");
+	background-size: cover; 
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(5, 13, 24, 0.2), var(--scene-dim));
+	pointer-events: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+
+.topbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 5;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1.1rem 3rem;
+	background: linear-gradient(180deg, rgba(10, 20, 33, 0.92), rgba(10, 20, 33, 0.2));
+	backdrop-filter: blur(8px);
+	gap: 1rem;
+	flex-wrap: wrap;
+
+	}
+
+.logo {
+	font-size: clamp(2rem, 3vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: 0.02em;
+	color: var(--nav-text);
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-links {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	flex-wrap: wrap;
+}
+
+.nav-links a {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--nav-text);
+}
+
+.nav-login {
+	padding: 0.8rem 1.7rem;
+	border: 2px solid rgba(255, 255, 255, 0.85);
+	border-radius: 8px;
+	background: rgba(15, 25, 39, 0.32);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+	color: var(--nav-text);
+	font-weight: 700;
+	cursor: pointer;
+	transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-login:hover {
+	transform: translateY(-1px);
+	background: rgba(15, 25, 39, 0.45);
+}
+
+.scene {
+	min-height: 100vh;
+	position: relative;
+	padding: 6rem 1.5rem 2rem;
+}
+
+.login-card {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(1);
+	width: min(100%, 380px);
+	padding: 3.5rem 2.25rem 2rem;
+	border-radius: 24px;
+	border: 1px solid var(--glass-border);
+	background: linear-gradient(180deg, var(--glass-bg), rgba(179, 205, 231, 0.54));
+	box-shadow:
+		0 22px 50px rgba(0, 0, 0, 0.34),
+		inset 0 1px 0 rgba(255, 255, 255, 0.7),
+		0 0 0 1px rgba(255, 255, 255, 0.08);
+	backdrop-filter: blur(20px);
+	overflow: hidden;
+	color: var(--card-text);
+	text-align: center;
+	transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+	will-change: transform;
+
+	}
+
+.login-card:hover {
+	animation: turbo-spin 0.18s linear infinite;
+	}
+
+.login-card.is-hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transform: translate(-50%, -50%) scale(0.94);
+}
+
+.login-card::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.06));
+	pointer-events: none;
+	}
+
+.close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 58px;
+	height: 50px;
+	border: 0;
+	border-bottom-left-radius: 18px;
+	background: var(--control-bg);
+	color: var(--nav-text);
+	font-size: 2.4rem;
+	line-height: 1;
+	cursor: pointer;
+	z-index: 1;
+	transition: background-color 0.15s ease, transform 0.15s ease;
+	}
+
+.close-button:hover {
+	background: #162638;
+	background: var(--control-bg-hover);
+	transform: scale(1.02);
+}
+
+.login-card h1 {
+	position: relative;
+	z-index: 1;
+	margin: 0 0 2.2rem;
+	font-size: clamp(2rem, 4vw, 2.5rem);
+	font-weight: 800;
+	color: var(--card-heading);
+	}
+
+.login-form {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	gap: 1.15rem;
+	text-align: left;
+	}
+
+.field {
+	display: grid;
+	gap: 0.45rem;
+	font-size: 0.98rem;
+	font-weight: 500;
+	color: var(--field-text);
+	}
+
+.field span {
+	padding-left: 1px;
+	}
+
+.field-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	}
+
+.help-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.2rem;
+	height: 1.2rem;
+	border-radius: 50%;
+	background-color: var(--control-bg-hover);
+	color: var(--nav-text);
+	font-size: 0.9rem;
+	font-weight: bold;
+	cursor: help;
+	transition: background-color 0.15s ease, transform 0.15s ease;
+	}
+
+.help-icon:hover {
+	background-color: var(--accent-link);
+	transform: scale(1.1);
+	}
+
+.field input {
+	width: 100%;
+	padding: 0.45rem 0.1rem 0.6rem;
+	border: 0;
+	border-bottom: 2px solid var(--field-line);
+	background: transparent;
+	outline: none;
+	font: inherit;
+	color: var(--card-heading);
+	}
+
+.field input:focus {
+	border-bottom-color: var(--accent-link);
+	}
+
+.form-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	flex-wrap: wrap;
+	font-size: 0.92rem;
+	color: var(--field-text);
+	}
+
+.remember-me {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	font-weight: 500;
+	cursor: pointer;
+	}
+
+.remember-me input {
+	width: 0.95rem;
+	height: 0.95rem;
+	accent-color: var(--control-bg-hover);
+	}
+
+.forgot-link {
+	font-weight: 500;
+	}
+
+.login-form button {
+	margin-top: 0.2rem;
+	padding: 0.9rem 1rem;
+	border: 0;
+	border-radius: 6px;
+	background: var(--primary-button);
+	color: var(--nav-text);
+	font: inherit;
+	font-size: 1.05rem;
+	font-weight: 700;
+	box-shadow: 0 8px 18px rgba(11, 19, 29, 0.22);
+	cursor: pointer;
+	transition: transform 0.15s ease, filter 0.15s ease;
+	}
+
+.login-form button:hover {
+	transform: translateY(-1px);
+	filter: brightness(1.03);
+	}
+
+.signup-text {
+	position: relative;
+	z-index: 1;
+	margin: 1.4rem 0 0;
+	font-size: 0.95rem;
+	color: var(--field-text);
+	}
+
+.signup-text a {
+	font-weight: 700;
+	}
+
+@keyframes turbo-spin {
+	from {
+		transform: translate(-50%, -50%) rotate(0deg) scale(1);
+	}
+
+	to {
+		transform: translate(-50%, -50%) rotate(360deg) scale(1);
+	}
+}
+
+#chat_icon {
+	position: fixed;
+	right: 1.5rem;
+	bottom: 1.5rem;
+	z-index: 6;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+    opacity: 0.5;
+}
+#chat_icon:hover {
+    opacity: 1;
+
+}
+#chat_icon img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* #meme-container {
+	position: fixed;
+	left: 50%;
+	top: 20%;
+	transform: translateX(-50%);
+	z-index: 10;
+	width: 280px;
+	height: 280px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	pointer-events: none;
+}
+
+#random-meme {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	animation: rotating-meme 8s linear infinite;
+	filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+	border-radius: 8px;
+} */
+
+@keyframes rotating-meme {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (max-width: 900px) {
+	.topbar {
+		padding: 1rem 1.25rem;
+	}
+
+	.nav-links {
+		gap: 1rem;
+	}
+
+	.scene {
+		padding-top: 7rem;
+	}
+
+	.login-card {
+		top: calc(50% + 1rem);
+	}
+}
+
+@media (max-width: 640px) {
+	.topbar {
+		justify-content: center;
+	}
+
+	.logo {
+		width: 100%;
+		text-align: center;
+	}
+
+	.nav-links {
+		justify-content: center;
+		gap: 0.9rem 1.2rem;
+	}
+
+	.nav-login {
+		padding: 0.6rem 1.2rem;
+	}
+
+	.scene {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	.login-card {
+		padding: 3rem 1.25rem 1.5rem;
+		border-radius: 20px;
+		width: min(100%, 340px);
+	}
+
+	#chat_icon {
+		right: 1rem;
+		bottom: 1rem;
+		width: 84px;
+		height: 84px;
+	}
+
+	.login-card,
+	.topbar {
+		backdrop-filter: blur(12px);
+	}
+
+	.close-button {
+		width: 52px;
+		height: 46px;
+	}
+
+	.form-row {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.login-form button {
+		width: 100%;
+	}
+}

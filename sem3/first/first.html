@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Data Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .card {
+            max-width: 720px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        #status {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        li {
+            padding: 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #f9fafb;
+        }
+
+        small {
+            color: #6b7280;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card">
+        <h1>User List</h1>
+        <p id="status">Loading data...</p>
+        <ul id="api-data"></ul>
+    </main>
+
+    <script src="catch.js"></script>
+</body>
+
+</html>
