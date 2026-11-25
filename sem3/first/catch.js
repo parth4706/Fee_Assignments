@@ -29,10 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
             listElement.innerHTML = `<li>${error.message}</li>`;
             console.error(error);
             
-
-            
-
-
         }
     }
 

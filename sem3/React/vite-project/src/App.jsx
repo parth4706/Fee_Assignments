@@ -1,126 +1,104 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import Home from './Home.jsx'
-import Productcard from './Productcard.jsx'
 import './App.css'
 
+const initialForm = {
+  name: '',
+  email: '',
+  subject: '',
+  message: '',
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [form, setForm] = useState(initialForm)
+  const [submitted, setSubmitted] = useState(false)
+
+  function handleChange(event) {
+    const { name, value } = event.target
+    setForm((currentForm) => ({ ...currentForm, [name]: value }))
+    setSubmitted(false)
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    setSubmitted(true)
+    setForm(initialForm)
+  }
 
   return (
-    <>
-      <Home />
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+    <main className="page-shell">
+      <section className="form-card" aria-labelledby="form-title">
+        <span className="eyebrow">GET IN TOUCH</span>
+        <h1 id="form-title">Send us a message</h1>
+        <p className="intro">
+          Fill in the form below and we will get back to you as soon as we can.
+        </p>
+
+        <form onSubmit={handleSubmit}>
+          <div className="input-row">
+            <div className="field">
+              <label htmlFor="name">Full name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Jane Smith"
+                autoComplete="name"
+                required
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="email">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="jane@example.com"
+                autoComplete="email"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="field">
+            <label htmlFor="subject">Subject</label>
+            <input
+              id="subject"
+              name="subject"
+              type="text"
+              value={form.subject}
+              onChange={handleChange}
+              placeholder="How can we help?"
+              required
+            />
+          </div>
+
+          <div className="field">
+            <label htmlFor="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              value={form.message}
+              onChange={handleChange}
+              placeholder="Write your message here..."
+              rows="5"
+              required
+            />
+          </div>
+
+          <button type="submit">Send message <span aria-hidden="true">→</span></button>
+          {submitted && (
+            <p className="success" role="status">
+              Thanks! Your message has been sent.
+            </p>
+          )}
+        </form>
       </section>
-
-      <Productcard />
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    </main>
   )
 }
 

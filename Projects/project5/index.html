@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Neon Login</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, system-ui, sans-serif;
+      background: #020817;
+      color: #edf6ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 32px 20px;
+      overflow-x: hidden;
+      background:
+        radial-gradient(ellipse at 20% 20%, #07357788, transparent 45%),
+        radial-gradient(ellipse at 85% 80%, #004cff33, transparent 40%),
+        #020817;
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(#268cff0c 1px, transparent 1px),
+        linear-gradient(90deg, #268cff0c 1px, transparent 1px);
+      background-size: 52px 52px;
+      mask-image: radial-gradient(ellipse, black, transparent 75%);
+    }
+
+    .orb {
+      position: fixed;
+      width: 260px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle at 30% 25%, #4cdfff, #075df1 30%, #031535 70%);
+      box-shadow: 0 0 90px #006aff44, inset -20px -20px 45px #0009;
+    }
+
+    .orb.one { top: -100px; right: -60px; }
+    .orb.two { bottom: -100px; left: -110px; width: 320px; opacity: .5; }
+
+    main {
+      width: min(100%, 430px);
+      perspective: 1200px;
+      position: relative;
+    }
+
+    .card {
+      --rx: 0deg;
+      --ry: 0deg;
+      position: relative;
+      padding: clamp(26px, 6vw, 42px);
+      border: 1px solid #318fff55;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #102647dd, #050e22f5);
+      backdrop-filter: blur(24px);
+      box-shadow:
+        0 30px 80px #0009,
+        0 0 50px #006aff18,
+        inset 0 1px 0 #9ddaff33;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      transition: transform .18s ease-out;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      height: 2px;
+      top: -1px;
+      left: 20%;
+      right: 20%;
+      background: #54dfff;
+      box-shadow: 0 0 18px #23bfff;
+    }
+
+    .logo {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      margin-bottom: 28px;
+      border: 1px solid #58ceff77;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #179dff33, #064cef22);
+      box-shadow: 0 8px 25px #008cff22, inset 0 0 16px #239cff22;
+      color: #83e4ff;
+      font-size: 28px;
+    }
+
+    .eyebrow {
+      color: #66cdff;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+    }
+
+    h1 { margin: 10px 0; font-size: clamp(28px, 7vw, 36px); letter-spacing: -1px; }
+    .subtitle { margin: 0 0 30px; color: #93a9c9; line-height: 1.6; }
+
+    .field { margin-bottom: 20px; }
+    label { display: block; font-size: 13px; margin-bottom: 9px; color: #c3d4ec; }
+    .input-wrap { position: relative; }
+
+    input[type="email"], input[type="password"], input[type="text"] {
+      width: 100%;
+      min-height: 52px;
+      border-radius: 12px;
+      border: 1px solid #294567;
+      padding: 14px 16px;
+      font: inherit;
+      font-size: 14px;
+      color: #eef8ff;
+      background: #020b1dcc;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    #password { padding-right: 72px; }
+    input::placeholder { color: #6c83a5; }
+
+    input:focus {
+      outline: none;
+      border-color: #45baff;
+      box-shadow: 0 0 0 3px #168bff22, 0 0 20px #168bff11;
+    }
+
+    button { font: inherit; cursor: pointer; }
+
+    .toggle {
+      position: absolute;
+      right: 6px;
+      top: 4px;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: #7bcfff;
+      font-size: 12px;
+    }
+
+    .options {
+      display: flex;
+      align-items: center;
+      margin: 4px 0 26px;
+    }
+
+    .remember {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      cursor: pointer;
+      color: #93a9c9;
+    }
+
+    input[type="checkbox"] { accent-color: #168bff; width: 16px; height: 16px; }
+
+    .submit {
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid #69d4ff;
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      background: linear-gradient(110deg, #078fe5, #2358f5);
+      box-shadow: 0 8px 28px #087bff44, inset 0 1px 0 #ffffff33;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px #087bff66;
+    }
+
+    .submit:active { transform: translateY(0); }
+    button:focus-visible, input[type="checkbox"]:focus-visible {
+      outline: 2px solid #83e4ff;
+      outline-offset: 4px;
+    }
+
+    .footer {
+      text-align: center;
+      margin: 26px 0 0;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #6c83a5;
+    }
+
+    #status {
+      color: #a8dfff;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 16px 0 0;
+    }
+
+    #status:empty { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+      .card { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="orb one" aria-hidden="true"></div>
+  <div class="orb two" aria-hidden="true"></div>
+
+  <main>
+    <section class="card" aria-labelledby="title">
+      <div class="logo" aria-hidden="true">◇</div>
+      <div class="eyebrow">Welcome to the next dimension</div>
+      <h1 id="title">Welcome back.</h1>
+      <p class="subtitle">Your space. Your next big idea.<br>Sign in to get started.</p>
+
+      <form id="login">
+        <div class="field">
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="input-wrap">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+            <button
+              class="toggle"
+              type="button"
+              aria-label="Show password"
+              aria-controls="password"
+              aria-pressed="false"
+            >Show</button>
+          </div>
+        </div>
+
+        <div class="options">
+          <label class="remember">
+            <input type="checkbox" name="remember">
+            Remember me
+          </label>
+        </div>
+
+        <button class="submit" type="submit">Sign in →</button>
+        <p id="status" role="status"></p>
+      </form>
+
+      <p class="footer">ENTER YOUR ORBIT</p>
+    </section>
+  </main>
+
+  <script>
+    const card = document.querySelector(".card");
+    const stage = document.querySelector("main");
+    const password = document.querySelector("#password");
+    const toggle = document.querySelector(".toggle");
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+
+    stage.addEventListener("pointermove", (event) => {
+      if (reducedMotion.matches || event.pointerType !== "mouse") return;
+
+      const rect = stage.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      card.style.setProperty("--rx", `${-y * 8}deg`);
+      card.style.setProperty("--ry", `${x * 8}deg`);
+    });
+
+    stage.addEventListener("pointerleave", () => {
+      card.style.setProperty("--rx", "0deg");
+      card.style.setProperty("--ry", "0deg");
+    });
+
+    toggle.addEventListener("click", () => {
+      const reveal = password.type === "password";
+      password.type = reveal ? "text" : "password";
+      toggle.textContent = reveal ? "Hide" : "Show";
+      toggle.setAttribute("aria-label", reveal ? "Hide password" : "Show password");
+      toggle.setAttribute("aria-pressed", String(reveal));
+    });
+
+    document.querySelector("#login").addEventListener("submit", (event) => {
+      event.preventDefault();
+      document.querySelector("#status").textContent =
+        "Demo only — no credentials are sent. Connect your authentication backend to enable sign-in.";
+    });
+  </script>
+</body>
+</html>

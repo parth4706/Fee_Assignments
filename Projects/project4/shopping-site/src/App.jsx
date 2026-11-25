@@ -12,7 +12,7 @@ const products = [
   },
   {
     id: 2,
-    
+
     name: 'Urban Runner',
     category: 'Footwear',
     price: 89,
